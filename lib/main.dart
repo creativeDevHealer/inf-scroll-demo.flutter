@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -52,7 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
     // Simulating loading data asynchronously
     Future.delayed(const Duration(seconds: 2), () {
       final newData = List.generate(_perPage, (index) => _counter * _perPage + index + 1);
-      _dataSubject.add(newData);
+      List<int> currentList = _dataSubject.hasValue ? _dataSubject.value : [];
+      currentList.addAll(newData);
+      _dataSubject.add(currentList);
       _counter++; // Increment counter for pagination
     });
   }
